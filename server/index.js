@@ -4,9 +4,10 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const userRoute = require("./routes/user");
+const errorHandler = require("./middleware/error");
 
 const app = express();
-const port = process.env.PORT
+const PORT = process.env.PORT
 
 // Middlewares
 app.use(express.json());
@@ -22,10 +23,13 @@ app.get("/", (req, res) => {
     res.send("Homepage");
 })
 
-
 mongoose.set('strictQuery', false);
-mongoose.connect(process.env.MONGO_URL)
-    .then(() => {
-        app.listen(port || 5000, () => console.log(`Server connected at port ${port}`));
+app.use(errorHandler);
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() =>
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}...`);
     })
-    .catch((err) => console.log(err))
+  )
+  .catch((err) => console.log(err));
