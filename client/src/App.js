@@ -8,6 +8,7 @@ import Login from './pages/Auth/Login';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Home__ from './pages/Home/Home__';
 
 axios.defaults.withCredentials = true;
 
@@ -20,7 +21,8 @@ function App() {
         <Route path='/login' element={<Login />}/>
         <Route path='/forgot' element={<Forgot />}/>
         <Route path='/register' element={<Register />}/>
-        <Route path='/reset' element={<Reset />}/>
+        <Route path='/resetpassword/:resettoken' element={<Reset />}/>
+        <Route path='/dashboard' element={<Home__ />}/>
       </Routes>
     </BrowserRouter>
   );
